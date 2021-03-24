@@ -3,11 +3,130 @@
 
 std::deque<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* end)
 {
-	// Find a path from start to end (The current implementation is obviously insufficient)
+	//Create a node pointer that points to the start node
+	Node* start = start;
+	//Create a node pointer that points to the goal node
+	Node* goal = end;
+
+	//Check if the start or the goal pointer is null
+	if (!start || !goal)
+	{
+		//return an empty list
+		return;
+		//end if statement
+	}
+	//Create the deque that will hold the final path
 	std::deque<Node*> path;
-	path.push_back(start);
-	path.push_back(start);
-	path.push_back(end);
+
+	//Create a node pointer that will be act as an iterator for the graph
+	Node* iterator = nullptr;
+
+	//Create an open list
+	std::deque<Node*> openList;
+	//Create a closed list
+	std::deque<Node*> closedList;
+
+	//Add start to the open list
+	openList.push_front(start);
+
+	//Loop while the open list is not empty
+	while (openList.size() > 0)
+	{
+		//Sort the items in the open list by the g score
+		for (int i = 0; i < openList.size(); i++)
+		{
+			for (int j = openList.size(); j > i; j--)
+			{
+				if (openList[i]->gScore > openList[j - 1]->gScore)
+				{
+					Node* temp = openList[i];
+					openList[i] = openList[j - 1];
+					openList[j - 1] = temp;
+				}
+			}
+		}
+
+		//Set the iterator to be the first item in the open list
+		iterator = openList[0];
+
+		//Check if the iterator is pointing to the goal node
+		if (iterator == goal)
+		{
+			//Return the new path found
+			break;
+			//end if statement
+		}
+
+		//Pop the first item off the open list
+		openList.pop_front();
+
+		//Add the first item to the closed list
+		closedList.push_front(iterator);
+
+		//Loop through all of the edges for the iterator
+		for (int i = 0; i < iterator->connections.size(); i++)
+		{
+			//Create a node pointer to store the other end of the edge
+			Node* nodeEdgeEnd = nullptr;
+
+			//Check if the iterator is on the second end of the node
+			if (iterator == iterator->connections[i].target)
+			{
+				//Set the edge end pointer to be the first end of the node
+				nodeEdgeEnd = iterator;
+			}
+			//Otherwise if the iterator is on the first end of the node...
+			else
+			{
+				//set the edge end pointer to be the second end of the node
+				nodeEdgeEnd = iterator->connections[i].target;
+				// end if statement
+			}
+
+			//Check if node at the end of the edge is in the closed list
+			if (!inList(closedList, nodeEdgeEnd))
+			{
+				//Create an int and set it to be the g score of the iterator plus the cost of the edge
+				int costOf = iterator->gScore + iterator->connections[i].cost;
+
+				//Check if the node at the end of the edge is in the open list
+				if (!inList(openList, nodeEdgeEnd))
+				{
+					//Set the nodes g score to be the g score calculated earlier
+					nodeEdgeEnd->gScore = costOf;
+
+					//Set the nodes previous to be the iterator
+					nodeEdgeEnd->previous = iterator;
+
+					//Add the node to the open list
+					openList.push_front(nodeEdgeEnd);
+				}
+				//Otherwise if the g score is less than the node at the end of the edge's g score...
+				else if (costOf < nodeEdgeEnd->gScore)
+				{
+					//Set its g score to be the g score calculated earlier
+					nodeEdgeEnd->gScore = costOf;
+
+					//Set its previous to be the current node
+					nodeEdgeEnd->previous = iterator;
+				}
+			}
+			//end if statement
+		}
+		//end loop
+	}
+	//end loop
+
+	//The iterator is currently pointing to the goal node
+	//	loop while the iterator is not null
+	while (iterator)
+	{
+		//Adds a node to the front of the path list
+		path.push_front(iterator);
+		//iterate to the previous node
+		iterator = iterator->previous;
+	}
+	//Returns the path that gets to the goal with the cheapest gScore
 	return path;
 }
 
@@ -50,4 +169,18 @@ void NodeGraph::drawConnectedNodes(Node* node, std::deque<Node*>* drawnList)
 			drawConnectedNodes(e.target, drawnList);
 		}
 	}
+}
+
+bool NodeGraph::inList(std::deque<Node*> list, Node* node)
+{
+	//iterates through entire deque List
+	for (int i = 0; i < list.size(); i++)
+		//Checks to see if the node at the current iteration is the desired node
+		if (list[i] == node)
+		{
+			//If this is the node, return true
+			return true;
+		}
+	//If the function made it this far, the node was not in the list
+	return false;
 }

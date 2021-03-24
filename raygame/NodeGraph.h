@@ -52,5 +52,13 @@ namespace NodeGraph
 	/// <param name="node">The node to start</param>
 	/// <param name="drawnList">Nodes that have already been drawn</param>
 	void drawConnectedNodes(Node* node, std::deque<Node*>* drawnList = nullptr);
+	Node* startNode;
+	/// <summary>
+	/// Checks each node in the list to find the node
+	/// </summary>
+	/// <param name="list">list for holding nodes</param>
+	/// <param name="node">node to find</param>
+	/// <returns> true if the node was found</returns>
+	bool inList(std::deque<Node*> list, Node* node);
 };
 

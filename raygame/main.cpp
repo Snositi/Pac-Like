@@ -106,7 +106,7 @@ int main()
 	};
 
 	// Create a maze, add it to the scene, and set it as the current scene
-	game.setCurrentScene(game.addScene(new Maze(pacMap)));
+	game.setCurrentScene(game.addScene(new Maze(emptyMap)));
 
 	game.run();
 
