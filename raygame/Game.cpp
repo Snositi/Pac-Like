@@ -119,6 +119,10 @@ void Game::start()
 void Game::update(float deltaTime)
 {
 	getCurrentScene()->update(deltaTime);
+	//Running start function after update since start just changes a bool and finds
+	//	the player which would not be present in the scene for the first call
+	if (!getCurrentScene()->getStarted())
+		getCurrentScene()->start();
 }
 
 void Game::draw()

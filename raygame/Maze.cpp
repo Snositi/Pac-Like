@@ -31,6 +31,15 @@ void Maze::draw()
 	//NodeGraph::drawGraph(m_grid[0][0].node);
 }
 
+void Maze::update(float deltaTime)
+{
+	Scene::update(deltaTime);
+	//Checks if the player has gone to the right of the screen
+	//	changes the scene to the appropriate room
+	if (m_player->getWorldPosition().x > 28 * 32)
+		
+}
+
 Maze::Tile Maze::getTile(MathLibrary::Vector2 position)
 {
 	int x = (int)(position.x / TILE_SIZE);
@@ -68,6 +77,8 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		tile.actor = ghost;
 		addActor(tile.actor);
 		break;
+	case TileKey::DOOR:
+		tile.cost = 100;
 	}
 	return tile;
 }

@@ -5,7 +5,6 @@
 #include <vector>
 
 class Sprite;
-
 class Actor
 {
 public:
@@ -199,7 +198,6 @@ protected:
     /// the last direction it moved in
     /// </summary>
     void updateFacing();
-
 private:
     /// <summary>
     /// Updates the global transform to be the combination of the paernt and local

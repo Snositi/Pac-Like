@@ -72,6 +72,8 @@ void Scene::update(float deltaTime)
         m_actors[i]->update(deltaTime);
     }
     checkCollision();
+    if(shouldTransition())
+        
 }
 
 void Scene::draw()

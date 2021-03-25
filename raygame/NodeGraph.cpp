@@ -3,130 +3,102 @@
 
 std::deque<NodeGraph::Node*> NodeGraph::findPath(Node* start, Node* end)
 {
-	//Create a node pointer that points to the start node
-	Node* start = start;
-	//Create a node pointer that points to the goal node
-	Node* goal = end;
-
-	//Check if the start or the goal pointer is null
-	if (!start || !goal)
-	{
-		//return an empty list
-		return;
-		//end if statement
-	}
-	//Create the deque that will hold the final path
+	// Find a path from start to end (The current implementation is obviously insufficient)
 	std::deque<Node*> path;
+	if (!start || !end)
+		return std::deque<Node*>();
 
 	//Create a node pointer that will be act as an iterator for the graph
-	Node* iterator = nullptr;
-
+	Node* currentNode = nullptr;
 	//Create an open list
-	std::deque<Node*> openList;
 	//Create a closed list
-	std::deque<Node*> closedList;
-
+	std::deque<Node*> open;
+	std::deque<Node*> closed;
 	//Add start to the open list
-	openList.push_front(start);
-
+	open.push_back(start);
 	//Loop while the open list is not empty
-	while (openList.size() > 0)
+	while (!open.empty())
 	{
 		//Sort the items in the open list by the g score
-		for (int i = 0; i < openList.size(); i++)
+		for (int i = 0; i < open.size(); i++)
 		{
-			for (int j = openList.size(); j > i; j--)
+			for (int j = open.size() - 1; j > i; j--)
 			{
-				if (openList[i]->gScore > openList[j - 1]->gScore)
-				{
-					Node* temp = openList[i];
-					openList[i] = openList[j - 1];
-					openList[j - 1] = temp;
+				if (open[j]->fScore < open[j - 1]->fScore) {
+					Node* temp = open[j];
+					open[j] = open[j - 1];
+					open[j - 1] = temp;
 				}
 			}
 		}
-
 		//Set the iterator to be the first item in the open list
-		iterator = openList[0];
-
+		currentNode = open[0];
 		//Check if the iterator is pointing to the goal node
-		if (iterator == goal)
+		if (currentNode == end)
 		{
 			//Return the new path found
-			break;
-			//end if statement
-		}
+			while (currentNode->previous != nullptr)
+			{
+				path.push_front(currentNode);
+				Node* nextNode = currentNode;
+				currentNode = currentNode->previous;
+				nextNode->previous = nullptr;
+			}
+			return path;
+		}//end if statement
 
 		//Pop the first item off the open list
-		openList.pop_front();
-
+		open.pop_front();
 		//Add the first item to the closed list
-		closedList.push_front(iterator);
+		closed.push_back(currentNode);
 
 		//Loop through all of the edges for the iterator
-		for (int i = 0; i < iterator->connections.size(); i++)
+		for (int i = 0; i < currentNode->connections.size(); i++)
 		{
 			//Create a node pointer to store the other end of the edge
-			Node* nodeEdgeEnd = nullptr;
+			Node* currentEdgeEnd = currentNode->connections[i].target;
 
-			//Check if the iterator is on the second end of the node
-			if (iterator == iterator->connections[i].target)
-			{
-				//Set the edge end pointer to be the first end of the node
-				nodeEdgeEnd = iterator;
-			}
-			//Otherwise if the iterator is on the first end of the node...
-			else
-			{
-				//set the edge end pointer to be the second end of the node
-				nodeEdgeEnd = iterator->connections[i].target;
-				// end if statement
-			}
-
-			//Check if node at the end of the edge is in the closed list
-			if (!inList(closedList, nodeEdgeEnd))
+			//Check if current node is not in the closed list
+			if (!inList(closed, currentEdgeEnd))
 			{
 				//Create an int and set it to be the g score of the iterator plus the cost of the edge
-				int costOf = iterator->gScore + iterator->connections[i].cost;
+				float gScore = currentNode->gScore + currentNode->connections[i].cost;
+				//Create a float and set it to be the h score of the node at the end of the edge
+				float hScore = (currentEdgeEnd->position - end->position).getMagnitude();
+				//Create a float for the f score and set it to be the g score combined with the h score
+				float fScore = gScore + hScore;
 
-				//Check if the node at the end of the edge is in the open list
-				if (!inList(openList, nodeEdgeEnd))
-				{
-					//Set the nodes g score to be the g score calculated earlier
-					nodeEdgeEnd->gScore = costOf;
+				if (!inList(open, currentEdgeEnd))
+				{//Check if the node at the end of the edge is not in the open list
 
+						//Set the nodes g score to be the g score calculated earlier
+					currentEdgeEnd->gScore = gScore;
+					//Set the nodes h score to be the h score calculated earlier
+					currentEdgeEnd->hScore = hScore;
+					//Set its nodes f score to be the f score calculated earlier
+					currentEdgeEnd->fScore = fScore;
 					//Set the nodes previous to be the iterator
-					nodeEdgeEnd->previous = iterator;
-
+					currentEdgeEnd->previous = currentNode;
 					//Add the node to the open list
-					openList.push_front(nodeEdgeEnd);
+					open.push_back(currentEdgeEnd);
 				}
-				//Otherwise if the g score is less than the node at the end of the edge's g score...
-				else if (costOf < nodeEdgeEnd->gScore)
-				{
-					//Set its g score to be the g score calculated earlier
-					nodeEdgeEnd->gScore = costOf;
-
+				else if (currentNode->fScore < currentEdgeEnd->fScore)
+				{//Otherwise if the f score is less than the node at the end of the edge's f score...
+						//Set the nodes g score to be the g score calculated earlier
+						//Set its g score to be the g score calculated earlier
+					currentEdgeEnd->gScore = gScore;
+					//Set the nodes h score to be the h score calculated earlier
+					currentEdgeEnd->hScore = hScore;
+					//Set its f score to be the f score calculated earlier
+					currentEdgeEnd->fScore = fScore;
 					//Set its previous to be the current node
-					nodeEdgeEnd->previous = iterator;
+					//Set the nodes previous to be the iterator
+					currentEdgeEnd->previous = currentNode;
 				}
 			}
 			//end if statement
-		}
-		//end loop
-	}
-	//end loop
-
-	//The iterator is currently pointing to the goal node
-	//	loop while the iterator is not null
-	while (iterator)
-	{
-		//Adds a node to the front of the path list
-		path.push_front(iterator);
-		//iterate to the previous node
-		iterator = iterator->previous;
-	}
-	//Returns the path that gets to the goal with the cheapest gScore
+		}//end loop
+	}//end loop
 	return path;
 }
 

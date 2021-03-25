@@ -33,6 +33,14 @@ public:
     /// <returns>False if the actor is a nullptr or isn't in the array.</returns>
     bool removeActor(Actor* actor);
 
+    //Checks to see if the game has called for the scenes to transition
+    bool shouldTransition() { if (m_transition == 0) return false; }
+    /// <summary>
+    /// Keeps Track of How Many Scenes The Game Wants To Increment
+    /// </summary>
+    /// <param name="scenes"> Can Be Pos or Neg</param>
+    void transtion(int scenes) { m_transition = scenes; }
+
     virtual void start();
 
     /// <summary>
@@ -51,7 +59,12 @@ public:
 private:
     std::vector<Actor*> m_actors;
     MathLibrary::Matrix3* m_world;
+    //Reference to the player used to negate the need to repeat getPlayer() function
+    Actor* m_player;
 
     bool m_started = false;
+    //Lazy way to check if the scenes should change
+    bool m_shouldTranstion;
+    int m_transition;
 };
 

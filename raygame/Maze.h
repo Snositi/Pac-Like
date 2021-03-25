@@ -21,7 +21,8 @@ public:
 		OPEN,
 		WALL,
 		MUD,
-		GHOST
+		GHOST,
+		DOOR
 	};
 
 	/// <summary>
@@ -45,6 +46,7 @@ public:
 	~Maze();
 
 	virtual void draw() override;
+	virtual void update(float deltaTime) override;
 
 	/// <summary>
 	/// Get the size of the maze.
