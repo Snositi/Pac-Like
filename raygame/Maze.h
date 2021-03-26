@@ -23,6 +23,7 @@ public:
 		WALL,
 		GHOST,
 		DUMBGHOST,
+		BASIC,
 		DOOR,
 		SPAWN
 	};

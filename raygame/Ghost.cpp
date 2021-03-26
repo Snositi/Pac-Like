@@ -11,7 +11,7 @@ Ghost::Ghost(float x, float y, float maxSpeed, int color, Maze* maze)
 
 Ghost::~Ghost()
 {
-	delete m_seekPathBehavior;
+	delete m_pathFindBehavior;
 	delete m_wanderBehavior;
 }
 
@@ -51,10 +51,10 @@ void Ghost::update(float deltaTime)
 
 void Ghost::draw()
 {
-	if (m_seekPathBehavior->getEnabled())
-		m_seekPathBehavior->draw(this);
-	if (m_wanderBehavior->getEnabled())
-		m_wanderBehavior->draw(this);
+	if (getBehaviorList()[0]->getEnabled())
+		getBehaviorList()[0]->draw(this);
+	if (getBehaviorList()[1]->getEnabled())
+		getBehaviorList()[1]->draw(this);
 	Agent::draw();
 }
 
@@ -78,7 +78,6 @@ void Ghost::onCollision(Actor* other)
 void Ghost::setTarget(Actor* target)
 {
 	m_target = target;
-	m_seekPathBehavior->setTarget(target);
 }
 
 Actor* Ghost::getTarget()

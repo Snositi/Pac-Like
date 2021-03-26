@@ -34,7 +34,7 @@ public:
 	void setTarget(Actor* target);
 
 private:
-	SeekPathBehavior* m_seekPathBehavior;
+	PathfindBehavior* m_pathFindBehavior;
 	WanderBehavior* m_wanderBehavior;
 	Maze* m_maze;
 

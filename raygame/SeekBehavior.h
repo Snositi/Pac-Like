@@ -3,7 +3,7 @@
 class SeekBehavior : public Behavior
 {
 public:
-	SeekBehavior() {}
+	SeekBehavior(Actor* target) { m_target = target; }
 
 	/// <summary>
 	/// Update the Behavior, affecting its owning Agent where necessary.

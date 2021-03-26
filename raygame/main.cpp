@@ -36,6 +36,7 @@ int main()
 	Maze::TileKey w = Maze::TileKey::WALL;
 	Maze::TileKey g = Maze::TileKey::GHOST;
 	Maze::TileKey G = Maze::TileKey::DUMBGHOST;
+	Maze::TileKey j = Maze::TileKey::BASIC;
 	Maze::TileKey d = Maze::TileKey::DOOR;
 	Maze::TileKey z = Maze::TileKey::SPAWN;
 
@@ -87,7 +88,7 @@ int main()
 		{ w, w, w, w, w, w, _, w, w, w, w, w, _, w, w, _, w, w, w, w, w, _, w, w, w, w, w, w },
 		{ w, w, w, w, w, w, _, w, w, w, w, w, _, w, w, _, w, w, w, w, w, _, w, w, w, w, w, w },
 		{ w, w, w, w, w, w, _, w, w, _, _, _, _, _, _, _, _, _, _, w, w, _, w, w, w, w, w, w },
-		{ w, w, w, w, w, w, _, w, w, _, _, _, _, g, _, _, _, _, _, w, w, _, w, w, w, w, w, w },
+		{ w, w, w, w, w, w, _, w, w, _, _, _, _, j, _, _, _, _, _, w, w, _, w, w, w, w, w, w },
 		{ w, w, w, w, w, w, _, w, w, _, _, _, _, _, _, _, _, _, _, w, w, _, w, w, w, w, w, w },
 		{ d, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, d },
 		{ w, w, w, w, w, w, _, w, w, _, _, _, _, _, _, _, _, _, _, w, w, _, w, w, w, w, w, w },

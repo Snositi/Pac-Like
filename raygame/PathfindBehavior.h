@@ -7,7 +7,7 @@ class Maze;
 class PathfindBehavior : public Behavior
 {
 public:
-	PathfindBehavior(Maze* maze) :m_maze(maze) {}
+	PathfindBehavior(Maze* maze, Actor* target) :m_maze(maze) { m_target = target; }
 
 	/// <summary>
 	/// Update the Behavior, affecting its owning Agent where necessary.

@@ -78,7 +78,7 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		Ghost* ghost = new Ghost(position.x, position.y, 200.0f, 0xFF6666FF, this);
 		ghost->setTarget(m_player);
 		ghost->addBehavior(new WanderBehavior(1, 1));
-		ghost->addBehavior(new SeekBehavior());
+		ghost->addBehavior(new SeekBehavior(m_player));
 		ghost->getBehaviorList()[0]->setEnabled(false);
 		ghost->getBehaviorList()[1]->setEnabled(false);
 		ghost->setVisionAngle(45);
@@ -87,14 +87,28 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		break;
 	}
 	case TileKey::GHOST:
+	{
 		tile.cost = 1.0f;
 		Ghost* ghost = new Ghost(position.x, position.y, 200.0f, 0xFF6666FF, this);
 		ghost->setTarget(m_player);
 		ghost->addBehavior(new WanderBehavior(1, 1));
-		ghost->addBehavior(new SeekPathBehavior(this));
+		ghost->addBehavior(new SeekPathBehavior(this, m_player));
 		ghost->getBehaviorList()[0]->setEnabled(false);
 		ghost->getBehaviorList()[1]->setEnabled(false);
 		ghost->setVisionAngle(45);
+		tile.actor = ghost;
+		addActor(tile.actor);
+		break;
+	}
+	case TileKey::BASIC:
+		tile.cost = 1.0f;
+		Ghost* ghost = new Ghost(position.x, position.y, 200.0f, 0xFF6666FF, this);
+		ghost->setTarget(m_player);
+		ghost->addBehavior(new SeekPathBehavior(this, m_player));
+		ghost->addBehavior(new SeekPathBehavior(this, m_player));
+		ghost->getBehaviorList()[0]->setEnabled(false);
+		ghost->getBehaviorList()[1]->setEnabled(false);
+		ghost->setVisionAngle(0);
 		tile.actor = ghost;
 		addActor(tile.actor);
 		break;

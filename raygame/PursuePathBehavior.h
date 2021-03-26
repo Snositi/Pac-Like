@@ -4,7 +4,7 @@
 class PursuePathBehavior : public PathfindBehavior
 {
 public:
-	PursuePathBehavior(Maze* maze) :PathfindBehavior(maze) {}
+	PursuePathBehavior(Maze* maze, Actor* target) :PathfindBehavior(maze,target) {}
 
 protected:
 	virtual MathLibrary::Vector2 findDestination(Agent* owner) override;
