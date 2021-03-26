@@ -19,7 +19,7 @@ void SeekBehavior::update(Agent* owner, float deltaTime)
 	MathLibrary::Vector2 direction = MathLibrary::Vector2::normalize(destination - position);
 
 	//Calculate the force
-	MathLibrary::Vector2 desiredVelocity = direction * owner->getMaxSpeed();
+	MathLibrary::Vector2 desiredVelocity = direction * (owner->getMaxSpeed() * getForceScale());
 	MathLibrary::Vector2 steeringForce = desiredVelocity - owner->getVelocity();
 
 	//Apply the force
@@ -28,10 +28,19 @@ void SeekBehavior::update(Agent* owner, float deltaTime)
 
 void SeekBehavior::draw(Agent* owner)
 {
-	int x = (int)owner->getWorldPosition().x;
-	int y = (int)owner->getWorldPosition().y;
-	x += Maze::TILE_SIZE / 2;
-	y += Maze::TILE_SIZE / 2;
-	DrawCircle(x, y, Maze::TILE_SIZE / 2, GetColor(owner->getColor()));
+	if (m_target == nullptr || owner == nullptr)
+		return;
+	//draw line connecting this agent to the target
+	DrawLine(owner->getWorldPosition().x ,
+		owner->getWorldPosition().y,
+		m_target->getWorldPosition().x,
+		m_target->getWorldPosition().y,
+		RED);
+	//draw line to represent the steering force applied
+	DrawLine(owner->getWorldPosition().x,
+		owner->getWorldPosition().y,
+		(owner->getWorldPosition().x) + (getSteeringForce().x),
+		(owner->getWorldPosition().y) + (getSteeringForce().y),
+		BLUE);
 }
 

@@ -164,9 +164,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Agent.cpp" />
-    <ClCompile Include="Behavior.cpp" />
     <ClCompile Include="Door.cpp" />
-    <ClCompile Include="DumbGhost.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="KeyboardBehavior.cpp" />
@@ -188,7 +186,6 @@
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="Door.h" />
-    <ClInclude Include="DumbGhost.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="KeyboardBehavior.h" />
@@ -201,7 +198,6 @@
     <ClInclude Include="SeekBehavior.h" />
     <ClInclude Include="SeekPathBehavior.h" />
     <ClInclude Include="Sprite.h" />
-    <ClInclude Include="SteeringBehavior.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="WanderBehavior.h" />
   </ItemGroup>

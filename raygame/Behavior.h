@@ -21,9 +21,17 @@ public:
 	virtual void draw(Agent* owner) {}
 
 	bool getEnabled() { return m_enabled; }
-	void setEnabled(bool enabled) { m_enabled = true; }
+	void setEnabled(bool enabled) { m_enabled = enabled; }
+
+	void setSteeringForce(MathLibrary::Vector2 force) { m_steeringForce = force; }
+	MathLibrary::Vector2 getSteeringForce() { return m_steeringForce; }
+
+	void setForceScale(float force) { m_forceScale = force; }
+	float getForceScale() { return m_forceScale; }
 
 private:
 	bool m_enabled = true;
+	MathLibrary::Vector2 m_steeringForce;
+	float m_forceScale = 1;
 };
 

@@ -73,16 +73,28 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		m_PlayerSpawn = { position.x,position.y };
 		break;
 	case TileKey::DUMBGHOST:
+	{
 		tile.cost = 1.0f;
-		DumbGhost* dumbGhost = new DumbGhost(position.x, position.y, 200.0f, 0xFF6666FF);
-		dumbGhost->setTarget(m_player);
-		tile.actor = dumbGhost;
+		Ghost* ghost = new Ghost(position.x, position.y, 200.0f, 0xFF6666FF, this);
+		ghost->setTarget(m_player);
+		ghost->addBehavior(new WanderBehavior(1, 1));
+		ghost->addBehavior(new SeekBehavior());
+		ghost->getBehaviorList()[0]->setEnabled(false);
+		ghost->getBehaviorList()[1]->setEnabled(false);
+		ghost->setVisionAngle(45);
+		tile.actor = ghost;
 		addActor(tile.actor);
 		break;
+	}
 	case TileKey::GHOST:
 		tile.cost = 1.0f;
 		Ghost* ghost = new Ghost(position.x, position.y, 200.0f, 0xFF6666FF, this);
 		ghost->setTarget(m_player);
+		ghost->addBehavior(new WanderBehavior(1, 1));
+		ghost->addBehavior(new SeekPathBehavior(this));
+		ghost->getBehaviorList()[0]->setEnabled(false);
+		ghost->getBehaviorList()[1]->setEnabled(false);
+		ghost->setVisionAngle(45);
 		tile.actor = ghost;
 		addActor(tile.actor);
 		break;

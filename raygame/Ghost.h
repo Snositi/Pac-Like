@@ -1,6 +1,8 @@
 #pragma once
 #include "Agent.h"
 #include "SeekPathBehavior.h"
+#include "WanderBehavior.h"
+#include "SeekBehavior.h"
 
 class Maze;
 
@@ -14,6 +16,9 @@ public:
 	/// <param name="maze">The maze used for pathfinding</param>
 	Ghost(float x, float y, float speed, int color, Maze* maze);
 	~Ghost();
+
+	bool checkTargetInSight();
+	void setVisionAngle(float degrees) { m_visionAngle = degrees * (3.14159265359f / 180); }
 
 	virtual void update(float deltaTime) override;
 	virtual void draw() override;
@@ -29,9 +34,12 @@ public:
 	void setTarget(Actor* target);
 
 private:
-	SeekPathBehavior* m_pathfindBehavior;
+	SeekPathBehavior* m_seekPathBehavior;
+	WanderBehavior* m_wanderBehavior;
 	Maze* m_maze;
 
-	Actor* m_target = nullptr;
+	Actor* m_target;
+
+	float m_visionAngle = 0;
 };
 

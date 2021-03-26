@@ -60,6 +60,8 @@ public:
 	/// <param name="behavior"></param>
 	void addBehavior(Behavior* behavior);
 
+	std::vector<Behavior*> getBehaviorList() { return m_behaviorList; };
+
 private:
 	std::vector<Behavior*> m_behaviorList;
 

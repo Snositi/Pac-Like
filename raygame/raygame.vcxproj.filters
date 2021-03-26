@@ -26,9 +26,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Behavior.cpp">
-      <Filter>Engine Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Agent.cpp">
       <Filter>Engine Source Files</Filter>
     </ClCompile>
@@ -69,9 +66,6 @@
       <Filter>Engine Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
-      <Filter>Pac Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DumbGhost.cpp">
       <Filter>Pac Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WanderBehavior.cpp">
@@ -128,12 +122,6 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
-      <Filter>Pac Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DumbGhost.h">
-      <Filter>Pac Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SteeringBehavior.h">
       <Filter>Pac Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WanderBehavior.h">

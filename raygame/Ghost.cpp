@@ -7,24 +7,54 @@ Ghost::Ghost(float x, float y, float maxSpeed, int color, Maze* maze)
 	: Agent(x, y, Maze::TILE_SIZE / 2.5f, maxSpeed, maxSpeed, color)
 {
 	m_maze = maze;
-	m_pathfindBehavior = new SeekPathBehavior(maze);
-	m_pathfindBehavior->setColor(color);
-	addBehavior(m_pathfindBehavior);
 }
 
 Ghost::~Ghost()
 {
-	delete m_pathfindBehavior;
+	delete m_seekPathBehavior;
+	delete m_wanderBehavior;
+}
+
+bool Ghost::checkTargetInSight()
+{
+	//check if the target is null if so return false
+	if (getTarget() == nullptr)
+		return false;
+	//find the direction vector that represents where the target is relative to the enemy
+	MathLibrary::Vector2 direction = MathLibrary::Vector2::normalize(getTarget()->getWorldPosition() - getWorldPosition());
+	//Find the dot product of the enemy's forward and the direction vector
+	float dotProduct = MathLibrary::Vector2::dotProduct(getForward(), direction);
+	//Find the angle using the dot product
+	float dotProductAngle = acosf(dotProduct);
+	//Check if that angle is greater than the enemy's viewing angle(any value you see fit is fine) (0.523599 = 30°)
+	if (dotProductAngle < m_visionAngle)
+		//Return if the enemy saw the target
+		return true;
+	return false;
 }
 
 void Ghost::update(float deltaTime)
 {
+	switch (checkTargetInSight())
+	{
+	case false:
+		getBehaviorList()[0]->setEnabled(true);
+		getBehaviorList()[1]->setEnabled(false);
+		break;
+	case true:
+		getBehaviorList()[0]->setEnabled(false);
+		getBehaviorList()[1]->setEnabled(true);
+		break;
+	}
 	Agent::update(deltaTime);
 }
 
 void Ghost::draw()
 {
-	m_pathfindBehavior->draw(this);
+	if (m_seekPathBehavior->getEnabled())
+		m_seekPathBehavior->draw(this);
+	if (m_wanderBehavior->getEnabled())
+		m_wanderBehavior->draw(this);
 	Agent::draw();
 }
 
@@ -48,7 +78,7 @@ void Ghost::onCollision(Actor* other)
 void Ghost::setTarget(Actor* target)
 {
 	m_target = target;
-	m_pathfindBehavior->setTarget(target);
+	m_seekPathBehavior->setTarget(target);
 }
 
 Actor* Ghost::getTarget()
