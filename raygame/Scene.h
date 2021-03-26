@@ -34,7 +34,7 @@ public:
     bool removeActor(Actor* actor);
 
     //Checks to see if the game has called for the scenes to transition
-    bool shouldTransition() { if (m_transition == 0) return false; }
+    bool shouldTransition();
     /// <summary>
     /// Keeps Track of How Many Scenes The Game Wants To Increment
     /// </summary>

@@ -12,6 +12,8 @@ Maze::Maze(TileKey map[Maze::HEIGHT][Maze::WIDTH])
 	generate(map);
 	//Add the player to the scene
 	addActor(m_player);
+	//Move the player to the spawn position set by the map;
+	m_player->setWorldPostion(getPlayerSpawn());
 }
 
 Maze::~Maze()
@@ -78,7 +80,14 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		addActor(tile.actor);
 		break;
 	case TileKey::DOOR:
-		tile.cost = 100;
+		tile.cost = 100.0f;
+		tile.actor = new Door(position.x, position.y);
+		addActor(tile.actor);
+		break;
+	case TileKey::SPAWN:
+		tile.cost = 1.0f;
+		m_PlayerSpawn = position;
+		break;
 	}
 	return tile;
 }

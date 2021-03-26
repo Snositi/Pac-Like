@@ -5,6 +5,7 @@
 #include <vector>
 
 class Sprite;
+
 class Actor
 {
 public:

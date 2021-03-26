@@ -38,6 +38,13 @@ bool Scene::removeActor(Actor* actor)
     return false;
 }
 
+bool Scene::shouldTransition()
+{
+    if (m_transition == 0)
+        return false;
+    return true;
+}
+
 void Scene::start()
 {
     m_started = true;
