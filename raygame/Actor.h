@@ -182,6 +182,11 @@ public:
     /// <returns>Returns true if the distance between the two actors is less than their combined radii.</returns>
     bool checkCollision(Actor* other);
 
+    int getShouldTransition() { return m_shouldTransition.x; }
+    void setShouldTransition(int value) { m_shouldTransition.x = value; }
+    int getDesiredTransitions() { return m_shouldTransition.y; }
+    void setDesiredTransitions(int value) { m_shouldTransition.y = value; }
+
     /// <summary>
     /// Called when a collision between this actor and another occurs. 
     /// </summary>
@@ -219,6 +224,8 @@ private:
     char m_icon;
     int m_color;
 
+    //{bool shouldTransition?,int transtionByHowMuch?}
+    MathLibrary::Vector2 m_shouldTransition = {0,0};
     bool m_started = false;
     bool m_static = false;
     Actor* m_parent = nullptr;

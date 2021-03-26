@@ -34,7 +34,6 @@ int main()
 	//Define tile costs
 	Maze::TileKey _ = Maze::TileKey::OPEN;
 	Maze::TileKey w = Maze::TileKey::WALL;
-	Maze::TileKey s = Maze::TileKey::MUD;
 	Maze::TileKey g = Maze::TileKey::GHOST;
 	Maze::TileKey d = Maze::TileKey::DOOR;
 	Maze::TileKey z = Maze::TileKey::SPAWN;
@@ -106,7 +105,7 @@ int main()
 		{ w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w },
 		{ w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w },
 	};
-	Maze::TileKey leftMap[Maze::HEIGHT][Maze::WIDTH] = {
+	Maze::TileKey rightMap[Maze::HEIGHT][Maze::WIDTH] = {
 	{ w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w },
 	{ w, _, _, _, _, _, _, _, _, _, w, _, _, g, _, _, _, w, _, _, _, _, _, _, _, _, _, w },
 	{ w, _, _, _, g, _, _, _, _, _, w, _, _, _, _, _, _, w, _, _, _, _, _, _, _, g, _, w },
@@ -121,7 +120,7 @@ int main()
 	{ w, _, _, _, _, _, _, _, _, _, w, _, _, w, w, _, _, w, _, _, _, _, _, _, _, _, _, w },
 	{ w, _, _, _, _, _, _, _, _, _, w, _, _, w, w, _, _, w, _, _, _, _, _, _, _, _, _, w },
 	{ w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w },
-	{ d, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w },
+	{ d, z, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w },
 	{ w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w },
 	{ w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w, w, w, w },
 	{ w, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, w, w, w, w },
@@ -145,7 +144,7 @@ int main()
 	//Scene[1] Create a maze, add it to the scene, and set it as the current scene
 	game.setCurrentScene(game.addScene(new Maze(pacMap)));
 	//Scene[2] Room Demonstrating AI Decision Tree Ghosts Wander Till Player is near then Seek using PathFinding
-	game.addScene(new Maze(leftMap));
+	game.addScene(new Maze(rightMap));
 
 	game.run();
 

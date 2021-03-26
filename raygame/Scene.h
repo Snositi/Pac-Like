@@ -33,13 +33,10 @@ public:
     /// <returns>False if the actor is a nullptr or isn't in the array.</returns>
     bool removeActor(Actor* actor);
 
-    //Checks to see if the game has called for the scenes to transition
-    bool shouldTransition();
-    /// <summary>
-    /// Keeps Track of How Many Scenes The Game Wants To Increment
-    /// </summary>
-    /// <param name="scenes"> Can Be Pos or Neg</param>
-    void transtion(int scenes) { m_transition = scenes; }
+    int getShouldTransition() { return m_shouldTransition.x; }
+    void setShouldTransition(int value) { m_shouldTransition.x = value; }
+    int getDesiredTransitions() { return m_shouldTransition.y; }
+    void setDesiredTransitions(int value) { m_shouldTransition.y = value; }
 
     virtual void start();
 
@@ -63,8 +60,7 @@ private:
     Actor* m_player;
 
     bool m_started = false;
-    //Lazy way to check if the scenes should change
-    bool m_shouldTranstion;
-    int m_transition;
+
+    MathLibrary::Vector2 m_shouldTransition = { 0,0 };
 };
 

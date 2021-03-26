@@ -38,13 +38,6 @@ bool Scene::removeActor(Actor* actor)
     return false;
 }
 
-bool Scene::shouldTransition()
-{
-    if (m_transition == 0)
-        return false;
-    return true;
-}
-
 void Scene::start()
 {
     m_started = true;
@@ -65,6 +58,14 @@ void Scene::checkCollision()
 
             if (m_actors[i]->checkCollision(m_actors[j]) && i != j)
                 m_actors[i]->onCollision(m_actors[j]);
+
+            if (m_actors[j]->getShouldTransition() > 0)
+            {
+                setShouldTransition(true);
+                setDesiredTransitions(m_actors[i]->getDesiredTransitions());
+                m_actors[i]->setShouldTransition(false);
+                m_actors[i]->setDesiredTransitions(0);
+            }
         }
     }
 }
@@ -78,9 +79,7 @@ void Scene::update(float deltaTime)
 
         m_actors[i]->update(deltaTime);
     }
-    checkCollision();
-    if(shouldTransition())
-        
+    checkCollision();        
 }
 
 void Scene::draw()

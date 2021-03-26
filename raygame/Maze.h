@@ -21,7 +21,6 @@ public:
 	enum class TileKey {
 		OPEN,
 		WALL,
-		MUD,
 		GHOST,
 		DOOR,
 		SPAWN
@@ -48,7 +47,6 @@ public:
 	~Maze();
 
 	virtual void draw() override;
-	virtual void update(float deltaTime) override;
 
 	/// <summary>
 	/// Get the size of the maze.

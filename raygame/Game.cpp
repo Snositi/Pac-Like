@@ -119,10 +119,18 @@ void Game::start()
 void Game::update(float deltaTime)
 {
 	getCurrentScene()->update(deltaTime);
+
 	//Running start function after update since start just changes a bool and finds
 	//	the player which would not be present in the scene for the first call
 	if (!getCurrentScene()->getStarted())
 		getCurrentScene()->start();
+	//Checks to see if the current scene should transition
+	if (getCurrentScene()->getShouldTransition() > 0)
+	{
+		getCurrentScene()->setShouldTransition(0);
+		//sets the current scene to the current scene index with the desired transitions applied
+		setCurrentScene(getCurrentSceneIndex() + getCurrentScene()->getDesiredTransitions());
+	}
 }
 
 void Game::draw()
