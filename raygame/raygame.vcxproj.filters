@@ -71,6 +71,12 @@
     <ClCompile Include="Door.cpp">
       <Filter>Pac Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DumbGhost.cpp">
+      <Filter>Pac Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WanderBehavior.cpp">
+      <Filter>Pac Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -122,6 +128,15 @@
       <Filter>Engine Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
+      <Filter>Pac Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DumbGhost.h">
+      <Filter>Pac Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SteeringBehavior.h">
+      <Filter>Pac Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WanderBehavior.h">
       <Filter>Pac Header Files</Filter>
     </ClInclude>
   </ItemGroup>
