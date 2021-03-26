@@ -59,7 +59,7 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		tile.cost = 1.0f;
 		break;
 	case TileKey::WALL:
-		tile.cost = 100.0f;
+		tile.cost = 1000.0f;
 		tile.actor = new Wall(position.x, position.y);
 		addActor(tile.actor);
 		break;
@@ -70,6 +70,7 @@ Maze::Tile Maze::createTile(int x, int y, TileKey key)
 		break;
 	case TileKey::SPAWN:
 		tile.cost = 1.0f;
+		m_PlayerSpawn = { position.x,position.y };
 		break;
 	case TileKey::GHOST:
 		tile.cost = 1.0f;

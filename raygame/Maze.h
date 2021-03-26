@@ -22,6 +22,7 @@ public:
 		OPEN,
 		WALL,
 		GHOST,
+		DUMBGHOST,
 		DOOR,
 		SPAWN
 	};
